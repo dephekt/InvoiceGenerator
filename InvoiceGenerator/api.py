@@ -41,17 +41,18 @@ class Address(UnicodeProperty):
     :param logo_filename: path to the image of logo of the company
     :param country: country
     """
-    _attrs = ('summary', 'address', 'city', 'zip_code', 'phone', 'email',
+    _attrs = ('summary', 'address', 'address2', 'city', 'zip_code', 'phone', 'email',
               'bank_name', 'bank_account', 'bank_code', 'note', 'vat_id', 'ir',
               'logo_filename', 'vat_note', 'country', 'division')
 
     def __init__(
-        self, summary, address='', city='', zip_code='', phone='', email='',
+        self, summary, address='', address2='', city='', zip_code='', phone='', email='',
         bank_name='', bank_account='', bank_code='', note='', vat_id='', ir='',
         logo_filename='', vat_note='', country='', division='',
     ):
         self.summary = summary
         self.address = address
+        self.address2 = address2
         self.division = division
         self.city = city
         self.country = country
@@ -78,10 +79,13 @@ class Address(UnicodeProperty):
         address_line = [self.summary]
         if self.division:
             address_line.append(self.division)
-        address_line += [
-            self.address,
-            u' '.join(filter(None, (self.zip_code, self.city))),
-            ]
+        if self.address2:
+            address_line.extend([self.address, self.address2])
+        else:
+            address_line.append(self.address)
+        address_line.append(
+            u' '.join(filter(None, (self.zip_code, self.city)))
+        )
         if self.country:
             address_line.append(self.country)
         if self.vat_id:
