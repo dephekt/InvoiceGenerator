@@ -42,13 +42,15 @@ class Address(UnicodeProperty):
     :param country: country
     """
     _attrs = ('summary', 'address', 'address2', 'city', 'zip_code', 'phone', 'email',
-              'bank_name', 'bank_account', 'bank_code', 'bank_routing', 'note', 'vat_id', 'ir',
-              'logo_filename', 'vat_note', 'country', 'division')
+              'bank_name', 'bank_account', 'bank_code', 'bank_routing', 'bank_address',
+              'bank_address2', 'bank_city', 'bank_zip_code', 'bank_country', 'note',
+              'vat_id', 'ir', 'logo_filename', 'vat_note', 'country', 'division')
 
     def __init__(
         self, summary, address='', address2='', city='', zip_code='', phone='', email='',
-        bank_name='', bank_account='', bank_code='', bank_routing='', note='', vat_id='', ir='',
-        logo_filename='', vat_note='', country='', division='',
+        bank_name='', bank_account='', bank_code='', bank_routing='', bank_address='',
+        bank_address2='', bank_city='', bank_zip_code='', bank_country='', note='',
+        vat_id='', ir='', logo_filename='', vat_note='', country='', division='',
     ):
         self.summary = summary
         self.address = address
@@ -60,6 +62,11 @@ class Address(UnicodeProperty):
         self.phone = phone
         self.email = email
         self.bank_name = bank_name
+        self.bank_address = bank_address
+        self.bank_address2 = bank_address2
+        self.bank_city = bank_city
+        self.bank_zip_code = bank_zip_code
+        self.bank_country = bank_country
         self.bank_account = bank_account
         self.bank_code = bank_code
         self.bank_routing = bank_routing
@@ -75,6 +82,21 @@ class Address(UnicodeProperty):
             return "%s/%s" % (self.bank_account, self.bank_code)
         else:
             return self.bank_account
+
+    def get_bank_address_lines(self):
+        if self.bank_address2:
+            lines = [self.bank_address, self.bank_address2]
+        else:
+            lines = [self.bank_address]
+
+        lines.append(
+            u' '.join(filter(None, (self.bank_zip_code, self.bank_city)))
+        )
+
+        if self.bank_country:
+            lines.append(self.bank_country)
+
+        return lines
 
     def _get_address_lines(self):
         address_line = [self.summary]

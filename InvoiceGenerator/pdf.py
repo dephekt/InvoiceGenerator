@@ -243,11 +243,17 @@ class SimpleInvoice(BaseInvoice):
         self.pdf.drawString(LEFT * mm, (TOP + 2) * mm, _(u'Payment information'))
 
         text = self.pdf.beginText((LEFT) * mm, (TOP - 2) * mm)
-        lines = [
-            self.invoice.provider.bank_name,
-            '%s: %s' % (_(u'Account'), self.invoice.provider.bank_account_str()),
-            '%s: %s' % (_(u'Routing'), self.invoice.provider.bank_routing),
-        ]
+        lines = [self.invoice.provider.bank_name]
+        if self.invoice.provider.bank_address:
+            lines.extend(self.invoice.provider.get_bank_address_lines())
+
+        lines.append(
+            '%s: %s' % (_(u'Account'), self.invoice.provider.bank_account_str())
+        )
+        if self.invoice.provider.bank_routing:
+            lines.append(
+                '%s: %s' % (_(u'Routing'), self.invoice.provider.bank_routing),
+            )
         if self.invoice.variable_symbol:
             lines.append(
                 '%s: %s' % (_(u'Variable symbol'), self.invoice.variable_symbol),
