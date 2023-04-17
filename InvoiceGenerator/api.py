@@ -42,12 +42,12 @@ class Address(UnicodeProperty):
     :param country: country
     """
     _attrs = ('summary', 'address', 'address2', 'city', 'zip_code', 'phone', 'email',
-              'bank_name', 'bank_account', 'bank_code', 'note', 'vat_id', 'ir',
+              'bank_name', 'bank_account', 'bank_code', 'bank_routing', 'note', 'vat_id', 'ir',
               'logo_filename', 'vat_note', 'country', 'division')
 
     def __init__(
         self, summary, address='', address2='', city='', zip_code='', phone='', email='',
-        bank_name='', bank_account='', bank_code='', note='', vat_id='', ir='',
+        bank_name='', bank_account='', bank_code='', bank_routing='', note='', vat_id='', ir='',
         logo_filename='', vat_note='', country='', division='',
     ):
         self.summary = summary
@@ -62,6 +62,7 @@ class Address(UnicodeProperty):
         self.bank_name = bank_name
         self.bank_account = bank_account
         self.bank_code = bank_code
+        self.bank_routing = bank_routing
         self.note = note
         self.vat_id = vat_id
         self.vat_note = vat_note

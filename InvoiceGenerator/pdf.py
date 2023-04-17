@@ -245,7 +245,8 @@ class SimpleInvoice(BaseInvoice):
         text = self.pdf.beginText((LEFT) * mm, (TOP - 2) * mm)
         lines = [
             self.invoice.provider.bank_name,
-            '%s: %s' % (_(u'Account n.'), self.invoice.provider.bank_account_str()),
+            '%s: %s' % (_(u'Account'), self.invoice.provider.bank_account_str()),
+            '%s: %s' % (_(u'Routing'), self.invoice.provider.bank_routing),
         ]
         if self.invoice.variable_symbol:
             lines.append(
