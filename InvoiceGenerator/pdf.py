@@ -242,6 +242,7 @@ class SimpleInvoice(BaseInvoice):
         self.pdf.setFont('DejaVu-Bold', 8)
         self.pdf.drawString(LEFT * mm, (TOP + 2) * mm, _(u'Payment information'))
 
+        self.pdf.setFont('DejaVu', 8)
         text = self.pdf.beginText((LEFT) * mm, (TOP - 2) * mm)
         lines = [self.invoice.provider.bank_name]
         if self.invoice.provider.bank_address:
