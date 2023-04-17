@@ -112,7 +112,7 @@ class Address(UnicodeProperty):
         if self.country:
             address_line.append(self.country)
         if self.vat_id:
-            address_line.append(_(u'Vat in: %s') % self.vat_id)
+            address_line.append(_(u'VAT ID: %s') % self.vat_id)
 
         if self.ir:
             address_line.append(_(u'IR: %s') % self.ir)
